@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>록헌 세무회계</title>
+<meta name="description" content="법대 출신 세무사가 처음부터 끝까지 직접 상담합니다. 법령과 예규를 근거로 답하는 록헌 세무회계.">
+<link rel="icon" href="이미지/심볼.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* 로고 색상 기준: 검정 + 크림 + 골드 */
+  :root {
+    --black: #111111;
+    --black-2: #262626;
+    --cream: #e2dec9;
+    --cream-bg: #f2efe4;
+    --gold: #b8914a;
+    --ink: #1a1a1a;
+    --muted: #5e5c55;
+    --line: #dcd7c6;
+    --bg: #faf8f2;
+    --white: #ffffff;
+    --max: 1120px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+  body {
+    font-family: "Noto Sans KR", system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.75;
+    word-break: keep-all;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+
+  /* 시안용 빈칸 표시 — 실제 내용이 들어가면 class="todo" 제거 */
+  .todo {
+    background: #fff3c4;
+    outline: 1px dashed #c9a227;
+    padding: 0 4px;
+    border-radius: 3px;
+  }
+
+  /* 헤더 */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(250, 248, 242, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .logo img { height: 34px; width: auto; }
+  .menu { display: flex; align-items: center; gap: 28px; font-size: 0.95rem; color: var(--muted); }
+  .menu a:hover { color: var(--black); }
+  .menu .cta { color: var(--cream); background: var(--black); padding: 8px 18px; }
+  .menu .cta:hover { background: var(--black-2); color: var(--white); }
+  .burger { display: none; background: none; border: 0; width: 40px; height: 40px; cursor: pointer; }
+  .burger i, .burger i::before, .burger i::after {
+    display: block; width: 22px; height: 2px; background: var(--black);
+    position: relative; margin: 0 auto; content: "";
+  }
+  .burger i::before { position: absolute; top: -7px; }
+  .burger i::after { position: absolute; top: 7px; }
+
+  /* 히어로 */
+  .hero { background: var(--cream-bg); padding: 88px 0; border-bottom: 1px solid var(--line); overflow: hidden; }
+  .hero .wrap { display: grid; grid-template-columns: 1.25fr 1fr; gap: 56px; align-items: center; }
+  .eyebrow { color: var(--gold); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.16em; margin-bottom: 22px; }
+  .hero h1 { font-size: clamp(1.9rem, 4.2vw, 2.9rem); line-height: 1.42; font-weight: 700; letter-spacing: -0.02em; color: var(--black); }
+  .hero h1 em { font-style: normal; background: linear-gradient(transparent 62%, rgba(184, 145, 74, 0.35) 62%); }
+  .hero p { margin-top: 24px; font-size: clamp(1rem, 1.8vw, 1.12rem); color: var(--muted); max-width: 520px; }
+  .btns { margin-top: 40px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn { display: inline-block; padding: 14px 28px; font-weight: 500; transition: 0.2s; }
+  .btn-dark { background: var(--black); color: var(--cream); }
+  .btn-dark:hover { background: var(--black-2); color: var(--white); }
+  .btn-line { border: 1px solid var(--black); color: var(--black); }
+  .btn-line:hover { background: var(--black); color: var(--cream); }
+  .hero-photo { position: relative; max-width: 420px; margin-left: auto; }
+  .hero-photo img.portrait { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; box-shadow: 16px 16px 0 var(--black); }
+  .hero-photo .badge {
+    position: absolute; left: -36px; bottom: 32px; width: 120px;
+    background: var(--cream-bg); padding: 10px;
+  }
+  .hero-photo .caption {
+    position: absolute; right: 0; top: 24px; background: var(--black); color: var(--cream);
+    font-size: 0.85rem; padding: 6px 14px;
+  }
+
+  /* 섹션 공통 */
+  section { padding: 96px 0; }
+  .sec-head { margin-bottom: 48px; }
+  .sec-head small { color: var(--gold); letter-spacing: 0.16em; font-size: 0.8rem; font-weight: 500; }
+  .sec-head h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); color: var(--black); margin-top: 8px; line-height: 1.4; letter-spacing: -0.02em; }
+  .sec-head p { color: var(--muted); margin-top: 12px; }
+
+  /* 소개 */
+  .about { display: grid; grid-template-columns: 360px 1fr; gap: 56px; align-items: start; }
+  .about-photo { aspect-ratio: 4 / 5; object-fit: cover; width: 100%; }
+  .about h3 { font-size: 1.5rem; color: var(--black); }
+  .about h3 span { font-size: 1rem; color: var(--muted); font-weight: 400; margin-left: 6px; }
+  .about .quote { margin: 20px 0 28px; padding-left: 18px; border-left: 3px solid var(--black); }
+  .career { list-style: none; display: grid; gap: 10px; }
+  .career li { display: flex; gap: 12px; color: var(--muted); }
+  .career li::before { content: ""; width: 6px; height: 6px; background: var(--gold); margin-top: 11px; flex: none; }
+  .name-meaning { margin-top: 32px; background: var(--black); color: var(--cream); padding: 22px 26px; font-size: 0.95rem; display: flex; gap: 20px; align-items: center; }
+  .name-meaning b { color: var(--white); font-size: 1.1rem; white-space: nowrap; }
+
+  /* 업무 분야 */
+  .bg-white { background: var(--white); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+  .card { padding: 32px 28px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); transition: 0.2s; }
+  .card:hover { background: var(--cream-bg); }
+  .card .num { color: var(--gold); font-size: 0.85rem; font-weight: 500; }
+  .card h4 { font-size: 1.15rem; color: var(--black); margin: 6px 0 10px; }
+  .card p { color: var(--muted); font-size: 0.95rem; }
+
+  /* 일하는 방식 */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 2px solid var(--black); }
+  .step { padding: 32px 28px 8px 0; }
+  .step + .step { padding-left: 28px; border-left: 1px solid var(--line); }
+  .step b { display: block; font-size: 1.25rem; color: var(--black); margin-bottom: 12px; }
+  .step p { color: var(--muted); }
+
+  /* 연락처 */
+  .contact { background: var(--black); color: var(--cream); }
+  .contact .sec-head h2 { color: var(--white); }
+  .contact .sec-head p { color: rgba(226, 222, 201, 0.7); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .info { display: grid; gap: 18px; }
+  .info div { display: grid; grid-template-columns: 90px 1fr; gap: 12px; padding-bottom: 18px; border-bottom: 1px solid rgba(226, 222, 201, 0.15); }
+  .info dt { color: var(--gold); font-size: 0.9rem; }
+  .info .todo { background: rgba(255, 243, 196, 0.12); outline-color: var(--gold); }
+  .map {
+    margin-top: 24px; aspect-ratio: 16 / 9;
+    border: 1px dashed rgba(226, 222, 201, 0.3);
+    display: flex; align-items: center; justify-content: center; color: rgba(226, 222, 201, 0.5); font-size: 0.9rem;
+  }
+  form { background: var(--bg); color: var(--ink); padding: 32px; display: grid; gap: 16px; }
+  form h3 { color: var(--black); font-size: 1.25rem; }
+  label { display: grid; gap: 6px; font-size: 0.9rem; color: var(--muted); }
+  input, select, textarea {
+    font: inherit; color: var(--ink); padding: 12px 14px;
+    border: 1px solid var(--line); background: var(--white); width: 100%; border-radius: 0;
+  }
+  input:focus, select:focus, textarea:focus { outline: 2px solid var(--gold); border-color: transparent; }
+  textarea { min-height: 120px; resize: vertical; }
+  .agree { display: flex; gap: 8px; align-items: center; font-size: 0.85rem; }
+  .agree input { width: auto; }
+  form button { background: var(--black); color: var(--cream); border: 0; padding: 14px; font: inherit; font-weight: 500; cursor: pointer; }
+  form button:hover { background: var(--black-2); color: var(--white); }
+
+  footer { background: #000; color: rgba(226, 222, 201, 0.55); font-size: 0.85rem; padding: 36px 0; border-top: 1px solid rgba(226, 222, 201, 0.12); }
+  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  footer b { color: var(--cream); }
+
+  /* 모바일 하단 고정 상담 버튼 */
+  .float-call { display: none; }
+
+  /* 태블릿 */
+  @media (max-width: 960px) {
+    .about { grid-template-columns: 280px 1fr; gap: 36px; }
+    .cards { grid-template-columns: repeat(2, 1fr); }
+    .hero-photo .badge { left: -20px; width: 96px; }
+  }
+  /* 모바일 */
+  @media (max-width: 720px) {
+    section { padding: 72px 0; }
+    .logo img { height: 28px; }
+    .burger { display: block; }
+    .menu {
+      display: none; position: absolute; top: 68px; left: 0; right: 0;
+      flex-direction: column; align-items: stretch; gap: 0; background: var(--bg); border-bottom: 1px solid var(--line);
+    }
+    .menu.open { display: flex; }
+    .menu a { padding: 16px 20px; border-top: 1px solid var(--line); }
+    .menu .cta { text-align: center; }
+    .hero { padding: 48px 0 64px; }
+    .hero .wrap { grid-template-columns: 1fr; gap: 40px; }
+    .hero-photo { max-width: 300px; margin: 0 auto; }
+    .hero-photo img.portrait { box-shadow: 10px 10px 0 var(--black); }
+    .hero-photo .badge { left: -12px; width: 80px; padding: 6px; }
+    .about { grid-template-columns: 1fr; }
+    .about-photo { max-width: 300px; }
+    .name-meaning { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .cards { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr; border-top: 0; }
+    .step, .step + .step { padding: 24px 0; border-left: 0; border-top: 1px solid var(--line); }
+    .step:first-child { border-top: 2px solid var(--black); }
+    .contact-grid { grid-template-columns: 1fr; }
+    form { padding: 24px 20px; }
+    .float-call {
+      display: block; position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 60;
+      background: var(--black); color: var(--cream); text-align: center; padding: 15px;
+      font-weight: 500; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    }
+    footer { padding-bottom: 96px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="logo"><img src="이미지/로고_가로.png" alt="록헌 세무회계"></a>
+    <button class="burger" aria-label="메뉴 열기" aria-expanded="false"><i></i></button>
+    <nav class="menu">
+      <a href="#about">세무사 소개</a>
+      <a href="#services">업무 분야</a>
+      <a href="#how">일하는 방식</a>
+      <a href="#contact" class="cta">상담 문의</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <!-- 1. 메인 -->
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">ROK HEON TAX ACCOUNTING</p>
+        <h1>"아마 될 거예요" 대신,<br><em>법령과 예규</em>를 찾아<br>근거로 답합니다.</h1>
+        <p>법대 출신 세무사가 처음부터 끝까지 직접 상담합니다.<br>모르는 건 확인하고, 확인한 것만 말씀드립니다.</p>
+        <div class="btns">
+          <a href="#contact" class="btn btn-dark">상담 신청하기</a>
+          <a href="#services" class="btn btn-line">업무 분야 보기</a>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <img class="portrait" src="이미지/대표_메인.jpg" alt="록헌 세무회계 대표 세무사 이훈성">
+        <span class="caption">대표 세무사 이훈성</span>
+        <img class="badge" src="이미지/심볼.png" alt="">
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. 세무사 소개 -->
+  <section id="about">
+    <div class="wrap">
+      <div class="sec-head">
+        <small>ABOUT</small>
+        <h2>법을 공부한 세무사가<br>직접 찾고, 직접 답합니다.</h2>
+      </div>
+      <div class="about">
+        <img class="about-photo" src="이미지/대표_소개.jpg" alt="대표 세무사 이훈성">
+        <div>
+          <h3>이훈성 <span>대표 세무사</span></h3>
+          <p class="quote">상담하신 내용은 직원에게 넘기지 않습니다. 처음 상담부터 신고, 사후 관리까지 제가 직접 맡습니다.</p>
+          <ul class="career">
+            <li><span class="todo">OO대학교 법학과 졸업</span></li>
+            <li><span class="todo">제 OO회 세무사 시험 합격</span></li>
+            <li><span class="todo">前 OO세무법인 / OO회계법인 근무</span></li>
+            <li><span class="todo">한국세무사회 정회원</span></li>
+          </ul>
+          <div class="name-meaning">
+            <b>록헌(祿憲)</b>
+            <span>복 록(祿), 법 헌(憲). '법으로 복을 불러온다'는 뜻을 담았습니다. 정확한 법 해석이 고객의 이익을 지키는 가장 확실한 방법이라고 믿습니다.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 업무 분야 -->
+  <section id="services" class="bg-white">
+    <div class="wrap">
+      <div class="sec-head">
+        <small>SERVICES</small>
+        <h2>업무 분야</h2>
+        <p>개인사업자부터 법인, 재산 관련 세금까지 상담합니다.</p>
+      </div>
+      <div class="cards">
+        <div class="card"><div class="num">01</div><h4>기장 대리</h4><p>매월 장부 작성과 부가가치세·원천세 신고를 맡아 사업에만 집중하실 수 있게 합니다.</p></div>
+        <div class="card"><div class="num">02</div><h4>종합소득세·법인세 신고</h4><p>업종과 상황에 맞는 공제·감면 요건을 하나씩 확인해 신고합니다.</p></div>
+        <div class="card"><div class="num">03</div><h4>상속세·증여세</h4><p>상속·증여 전 사전 검토부터 신고까지, 가족 상황에 맞는 방법을 함께 찾습니다.</p></div>
+        <div class="card"><div class="num">04</div><h4>양도소득세</h4><p>부동산·주식 양도 전 비과세·감면 요건을 법령과 예규로 미리 확인합니다.</p></div>
+        <div class="card"><div class="num">05</div><h4>세무조사 대응</h4><p>조사 통지부터 종결까지 소명 자료를 준비하고 함께 대응합니다.</p></div>
+        <div class="card"><div class="num">06</div><h4>창업·사업자 컨설팅</h4><p>개인사업자와 법인 중 어느 쪽이 맞는지, 시작 단계부터 함께 검토합니다.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. 일하는 방식 -->
+  <section id="how">
+    <div class="wrap">
+      <div class="sec-head">
+        <small>HOW WE WORK</small>
+        <h2>록헌이 일하는 방식</h2>
+      </div>
+      <div class="steps">
+        <div class="step"><b>직접 상담</b><p>대표 세무사가 처음부터 끝까지 직접 상담합니다. 담당자가 바뀌어 같은 설명을 반복하실 일이 없습니다.</p></div>
+        <div class="step"><b>근거로 답변</b><p>"아마 될 거예요"라고 답하지 않습니다. 관련 법령과 국세청 예규를 찾아 근거와 함께 설명드립니다.</p></div>
+        <div class="step"><b>확인한 것만</b><p>바로 답하기 어려운 질문은 확인한 뒤 말씀드립니다. 확인하지 않은 내용은 말씀드리지 않습니다.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. 오시는 길 · 상담 문의 -->
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <div class="sec-head">
+        <small>CONTACT</small>
+        <h2>상담 문의</h2>
+        <p>전화, 카카오톡, 아래 신청서 중 편하신 방법으로 연락 주세요.</p>
+      </div>
+      <div class="contact-grid">
+        <div>
+          <dl class="info">
+            <div><dt>전화</dt><dd><span class="todo">0OO-OOOO-OOOO</span></dd></div>
+            <div><dt>카카오톡</dt><dd><span class="todo">카카오톡 채널 링크</span></dd></div>
+            <div><dt>이메일</dt><dd>rokheontax@gmail.com</dd></div>
+            <div><dt>주소</dt><dd><span class="todo">사무실 주소</span></dd></div>
+            <div><dt>상담 시간</dt><dd><span class="todo">평일 09:00 ~ 18:00</span></dd></div>
+          </dl>
+          <div class="map">지도 자리 (네이버 지도 연결 예정)</div>
+        </div>
+        <form id="consult">
+          <h3>상담 신청서</h3>
+          <label>성함<input name="name" required></label>
+          <label>연락처<input name="phone" type="tel" required></label>
+          <label>상담 분야
+            <select name="topic">
+              <option>기장 대리</option>
+              <option>종합소득세·법인세</option>
+              <option>상속세·증여세</option>
+              <option>양도소득세</option>
+              <option>세무조사 대응</option>
+              <option>창업·사업자 컨설팅</option>
+              <option>기타</option>
+            </select>
+          </label>
+          <label>문의 내용<textarea name="message" placeholder="상황을 간단히 적어주시면 확인 후 연락드립니다."></textarea></label>
+          <label class="agree"><input type="checkbox" required> 상담을 위한 개인정보 수집·이용에 동의합니다.</label>
+          <button type="submit">상담 신청하기</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><b>록헌 세무회계</b><br>대표 세무사 이훈성 · 사업자등록번호 <span class="todo">OOO-OO-OOOOO</span></div>
+    <div>© 2026 록헌 세무회계. All rights reserved.</div>
+  </div>
+</footer>
+
+<a href="#contact" class="float-call">상담 신청하기</a>
+
+<script>
+  const burger = document.querySelector('.burger');
+  const menu = document.querySelector('.menu');
+  burger.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open);
+  });
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    menu.classList.remove('open');
+    burger.setAttribute('aria-expanded', false);
+  }));
+
+  // 시안 단계: 신청서는 메일 앱으로 연결 (공개 전 폼 수신 서비스로 교체)
+  document.getElementById('consult').addEventListener('submit', e => {
+    e.preventDefault();
+    const f = new FormData(e.target);
+    const body = `성함: ${f.get('name')}\n연락처: ${f.get('phone')}\n분야: ${f.get('topic')}\n\n${f.get('message')}`;
+    location.href = `mailto:rokheontax@gmail.com?subject=${encodeURIComponent('[홈페이지 상담] ' + f.get('topic'))}&body=${encodeURIComponent(body)}`;
+  });
+</script>
+</body>
+</html>
