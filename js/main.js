@@ -32,17 +32,25 @@ const header = document.querySelector('header.site');
 const hero = document.querySelector('.hero, .page-hero');
 const statement = document.getElementById('statement');
 const words = statement ? statement.querySelectorAll('.w') : [];
-const rows = document.querySelectorAll('.ticker .row');
+const rows = document.querySelectorAll('.marquee .row');
 const stepsList = document.querySelectorAll('.steps');
 const mbar = document.querySelector('.mbar');
 const isHome = !!document.querySelector('.hero');
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// 키워드가 화면 폭의 3배가 될 때까지 반복해서 빈 공간이 보이지 않게
+// 질문 카드가 화면 폭의 3배가 될 때까지 복제해서 빈 공간이 보이지 않게
+// (복제본은 화면 읽기·탭 이동에서 제외)
 rows.forEach(row => {
-  const html = row.innerHTML;
-  while (row.scrollWidth < innerWidth * 3) row.innerHTML += html;
+  const items = [...row.children];
+  while (row.scrollWidth < innerWidth * 3) {
+    items.forEach(n => {
+      const c = n.cloneNode(true);
+      c.setAttribute('aria-hidden', 'true');
+      c.tabIndex = -1;
+      row.appendChild(c);
+    });
+  }
 });
 
 function update() {

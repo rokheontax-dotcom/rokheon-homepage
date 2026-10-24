@@ -60,11 +60,19 @@
     </div>
   </section>
 
-  <!-- 흐르는 키워드 띠 -->
-  <div class="ticker" aria-hidden="true">
-    <div class="row" data-speed="-0.35"><span>기장 대리</span><span class="fill">양도소득세</span><span>상속세</span><span class="fill">증여세</span><span>세무조사 대응</span><span class="fill">법인 설립</span><span>절세 컨설팅</span></div>
-    <div class="row" data-speed="0.35"><span class="fill">근거</span><span>법령</span><span class="fill">예규</span><span>직접 상담</span><span class="fill">확인</span><span>판례</span></div>
-  </div>
+  <!-- 이런 고민으로 찾아오십니다 — 스크롤 따라 좌우로 흐르는 질문 카드 (질문 목록은 build.py WORRIES) -->
+  <section class="worries" aria-labelledby="worries-title">
+    <div class="wrap">
+      <div class="sec-head" data-reveal>
+        <small>CONSULTATIONS</small>
+        <h2 id="worries-title">이런 고민으로 찾아오십니다</h2>
+        <p>실제 상담에서 자주 듣는 질문입니다. 비슷한 고민이 있다면 눌러서 자세히 보세요.</p>
+      </div>
+    </div>
+    <div class="marquee">
+{WORRY_ROWS}
+    </div>
+  </section>
 
   <!-- 4. 업무 분야 -->
   <section id="services" class="sec bg-white">
