@@ -9,8 +9,14 @@
 """
 from pathlib import Path
 from html import escape
+import hashlib
 
 ROOT = Path(__file__).parent
+
+
+def ver(rel):
+    """파일 내용 해시 — CSS/JS가 바뀌면 주소가 달라져 휴대폰 캐시에 옛 파일이 남지 않는다."""
+    return hashlib.md5((ROOT / rel).read_bytes()).hexdigest()[:8]
 
 # ── 연락처 (확정되면 여기만 바꾸면 전 페이지 반영) ──
 KAKAO = "https://pf.kakao.com/_EGkQG/chat"  # 누르면 바로 채팅창이 열리는 주소
@@ -284,7 +290,7 @@ def page(r, current, title, desc, body):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{r}css/style.css">
+<link rel="stylesheet" href="{r}css/style.css?v={ver('css/style.css')}">
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -298,7 +304,7 @@ def page(r, current, title, desc, body):
 
 {footer(r)}
 
-<script src="{r}js/main.js"></script>
+<script src="{r}js/main.js?v={ver('js/main.js')}"></script>
 </body>
 </html>
 """

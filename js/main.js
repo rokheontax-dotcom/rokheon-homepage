@@ -21,10 +21,18 @@ menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
 }));
 
 // 화면에 들어오면 등장
-const io = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+// IntersectionObserver가 일부 모바일 환경에서 반응하지 않아 콘텐츠가 안 보이는 일이 있어,
+// 스크롤할 때 위치를 직접 확인하는 방식(revealCheck)을 함께 쓴다. 둘 중 먼저 걸리는 쪽이 보여준다.
+let pending = [...document.querySelectorAll('[data-reveal]')];
+const show = el => { el.classList.add('in'); pending = pending.filter(p => p !== el); };
+const io = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { show(e.target); io.unobserve(e.target); } });
+}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }) : null;
+if (io) pending.forEach(el => io.observe(el));
+function revealCheck() {
+  const limit = innerHeight * 0.92;
+  pending.forEach(el => { if (el.getBoundingClientRect().top < limit) show(el); });
+}
 
 // 스크롤 위치에 따라 움직이는 요소들 (페이지마다 있는 것만 동작)
 const root = document.documentElement;
@@ -40,6 +48,7 @@ const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function update() {
   const y = scrollY, vh = innerHeight;
+  if (pending.length) revealCheck();
 
   header.classList.toggle('scrolled', y > 20);
   header.style.setProperty('--sp', clamp(y / (root.scrollHeight - vh)));
