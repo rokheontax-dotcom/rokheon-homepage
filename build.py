@@ -14,10 +14,12 @@ ROOT = Path(__file__).parent
 
 # ── 연락처 (확정되면 여기만 바꾸면 전 페이지 반영) ──
 KAKAO = "https://pf.kakao.com/_EGkQG/chat"  # 누르면 바로 채팅창이 열리는 주소
-TEL = "tel:"                                # 예: tel:0321234567
-TEL_TEXT = '<span class="todo">0OO-OOOO-OOOO</span>'
+TEL = "tel:0325454263"
+TEL_TEXT = "032-545-4263"
+MOBILE = "tel:01045234263"
+MOBILE_TEXT = "010-4523-4263"
 BLOG = "https://blog.naver.com/rokheontax"
-EMAIL = "rokheontax@gmail.com"
+EMAIL = "gnstjd3636@rokheon.com"
 ADDRESS = "인천광역시 서해구 가정로 451, 446호"
 HOURS = '<span class="todo">평일 09:00 ~ 18:00</span>'
 BIZ_NO = '<span class="todo">OOO-OO-OOOOO</span>'
@@ -189,7 +191,8 @@ def steps_html(items, cls="steps"):
 
 def info_html():
     return f"""          <dl class="info">
-            <div><dt>전화</dt><dd><a href="{TEL}">{TEL_TEXT}</a></dd></div>
+            <div><dt>대표번호</dt><dd><a href="{TEL}">{TEL_TEXT}</a></dd></div>
+            <div><dt>휴대전화</dt><dd><a href="{MOBILE}">{MOBILE_TEXT}</a></dd></div>
             <div><dt>카카오톡</dt><dd><a href="{KAKAO}" target="_blank" rel="noopener">록헌 세무회계 채널</a></dd></div>
             <div><dt>이메일</dt><dd><a href="mailto:{EMAIL}">{EMAIL}</a></dd></div>
             <div><dt>주소</dt><dd>{ADDRESS}</dd></div>
@@ -230,7 +233,7 @@ def footer(r):
     <div>
       <b>록헌 세무회계</b><br>
       대표 세무사 이훈성 · 사업자등록번호 {BIZ_NO}<br>
-      {ADDRESS} · {TEL_TEXT} · {EMAIL}<br>
+      {ADDRESS} · 대표번호 {TEL_TEXT} · 휴대전화 {MOBILE_TEXT} · {EMAIL}<br>
       © 2026 록헌 세무회계. All rights reserved.
     </div>
     <nav>
