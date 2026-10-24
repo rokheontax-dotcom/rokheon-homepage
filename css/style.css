@@ -363,3 +363,8 @@ footer.site .todo { background: rgba(255, 243, 196, 0.12); outline-color: var(--
   .js .about-visual img { clip-path: none; }
   .js .about-visual .frame { transform: none; }
 }
+
+/* 대표 소개: 전문 분야 */
+.field { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.field b { color: var(--gold); font-size: 0.85rem; letter-spacing: 0.12em; margin-right: 6px; }
+.field span { background: var(--black); color: var(--cream); padding: 6px 14px; font-size: 0.95rem; }
