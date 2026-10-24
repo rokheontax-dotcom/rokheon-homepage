@@ -180,38 +180,25 @@ HOW = [
 ]
 
 
-# ── 홈 "이런 고민으로 찾아오십니다" (질문, 업무 slug) — 두 줄로 나뉘어 흐름 ──
-# 고객 후기가 아니라 상담에서 자주 듣는 질문이다. 결과를 약속하는 문구는 넣지 않는다.
+# ── 홈 "이런 고민으로 찾아오십니다" (질문, 업무 slug) — 메신저 말풍선으로 하나씩 나타남 ──
+# 고객 후기가 아니라 상담에서 자주 듣는 질문이다. 결과를 약속하는 문구는 넣지 않는다. 짧게 유지.
 WORRIES = [
-    [
-        ("법인으로 바꾸면 세금이 정말 줄어드나요?", "startup"),
-        ("매달 신고 일정 챙기기가 너무 버거워요", "bookkeeping"),
-        ("집 팔기 전에 비과세가 되는지 미리 알고 싶어요", "capital-gains"),
-        ("대표 퇴직금, 얼마까지 받을 수 있나요?", "tax-planning"),
-        ("개인사업자로 시작할지, 법인으로 시작할지 모르겠어요", "startup"),
-        ("자녀에게 집을 넘겨주려면 증여가 나을까요?", "inheritance-gift"),
-    ],
-    [
-        ("법인에 쌓인 돈, 어떻게 꺼내야 하나요?", "tax-planning"),
-        ("일시적 2주택인데 언제까지 팔아야 하나요?", "capital-gains"),
-        ("경비로 인정되는 게 어디까지인지 헷갈려요", "bookkeeping"),
-        ("가지급금이 계속 쌓여서 걱정이에요", "tax-planning"),
-        ("세무서에서 소명자료를 내라고 연락이 왔어요", "tax-audit"),
-        ("직원 급여 신고까지 한 번에 맡기고 싶어요", "bookkeeping"),
-    ],
+    ("법인으로 바꾸면 세금이 줄어드나요?", "startup"),
+    ("매달 신고 챙기기가 버거워요", "bookkeeping"),
+    ("집 팔기 전에 비과세인지 알고 싶어요", "capital-gains"),
+    ("대표 퇴직금, 얼마까지 가능할까요?", "tax-planning"),
+    ("자녀에게 증여, 지금 해도 될까요?", "inheritance-gift"),
+    ("세무서에서 소명 요청이 왔어요", "tax-audit"),
 ]
+WORRY_REPLY = "하나씩 확인하고, 근거와 함께 답해드릴게요."
 
 
-def worry_rows(r):
-    names = {s["slug"]: s["name"] for s in SERVICES}
-    rows = []
-    for i, row in enumerate(WORRIES):
-        cards = "".join(
-            f'<a class="q" href="{r}services/{slug}.html"><span class="bubble">{escape(q)}</span>'
-            f'<span class="tag">{names[slug]} <span class="arr">→</span></span></a>'
-            for q, slug in row)
-        rows.append(f'      <div class="row" data-speed="{-0.3 if i == 0 else 0.3}">{cards}</div>')
-    return "\n".join(rows)
+def worry_chat(r):
+    out = [f'        <a class="msg" href="{r}services/{slug}.html" data-reveal style="--d:{i * 0.12:.2f}s">{escape(q)}</a>'
+           for i, (q, slug) in enumerate(WORRIES)]
+    out.append(f'        <p class="msg me" data-reveal style="--d:{len(WORRIES) * 0.12 + 0.1:.2f}s">'
+               f'<img src="{r}이미지/심볼.png" alt="록헌">{escape(WORRY_REPLY)}</p>')
+    return "\n".join(out)
 
 
 def steps_html(items, cls="steps"):
@@ -396,7 +383,7 @@ def service_body(s):
 
 def main():
     src = ROOT / "_원본"
-    home = fill((src / "홈.html").read_text(encoding="utf-8"), "").replace("{SERVICE_CARDS}", service_cards("")).replace("{WORRY_ROWS}", worry_rows(""))
+    home = fill((src / "홈.html").read_text(encoding="utf-8"), "").replace("{SERVICE_CARDS}", service_cards("")).replace("{WORRY_CHAT}", worry_chat(""))
     (ROOT / "index.html").write_text(page("", "home", None,
         "법대 출신 세무사가 처음부터 끝까지 직접 상담합니다. 법령과 예규를 근거로 답하는 록헌 세무회계.", home), encoding="utf-8")
 

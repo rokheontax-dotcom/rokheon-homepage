@@ -202,25 +202,24 @@ section.sec { padding: 120px 0; }
 .meaning p { color: var(--muted); font-size: 1.05rem; margin-top: 16px; }
 .meaning p strong { color: var(--black); }
 
-/* ── 이런 고민으로 찾아오십니다 (스크롤 따라 흐르는 질문 카드) ── */
-.worries { background: var(--cream-bg); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 110px 0 120px; overflow: hidden; }
-.worries .sec-head { margin-bottom: 48px; }
-.marquee .row { display: flex; gap: 18px; width: max-content; will-change: transform; }
-.marquee .row + .row { margin-top: 18px; }
-.q {
-  flex: none; width: 340px; display: flex; flex-direction: column; justify-content: space-between; gap: 18px;
-  padding: 26px 26px 22px; background: var(--white); border: 1px solid var(--line);
-  border-radius: 20px 20px 20px 4px; transition: background 0.3s, border-color 0.3s, transform 0.3s var(--ease);
+/* ── 이런 고민으로 찾아오십니다 (메신저 말풍선) ── */
+.worries { background: var(--cream-bg); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 110px 0; }
+.worries-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.worries .sec-head { margin-bottom: 0; }
+.chat { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.msg {
+  max-width: 90%; padding: 14px 22px; background: var(--white); border: 1px solid var(--line);
+  border-radius: 22px 22px 22px 6px; font-size: 1.05rem; font-weight: 500; color: var(--black);
+  transition: border-color 0.25s, transform 0.25s var(--ease);
 }
-.marquee .row + .row .q { border-radius: 20px 20px 4px 20px; }
-.q .bubble { font-size: 1.12rem; font-weight: 700; line-height: 1.5; color: var(--black); transition: color 0.3s; }
-.q .bubble::before { content: "“"; color: var(--gold); margin-right: 2px; }
-.q .bubble::after { content: "”"; color: var(--gold); margin-left: 2px; }
-.q .tag { font-size: 0.85rem; font-weight: 500; color: var(--gold); }
-.q .tag .arr { display: inline-block; transition: transform 0.25s var(--ease); }
-.q:hover { background: var(--black); border-color: var(--black); transform: translateY(-4px); }
-.q:hover .bubble { color: var(--cream); }
-.q:hover .tag .arr { transform: translateX(4px); }
+a.msg:hover { border-color: var(--black); transform: translateX(4px); }
+a.msg::after { content: " →"; color: var(--gold); opacity: 0; transition: opacity 0.25s; }
+a.msg:hover::after { opacity: 1; }
+.msg.me {
+  align-self: flex-end; display: flex; align-items: center; gap: 12px; margin-top: 14px;
+  background: var(--black); border-color: var(--black); color: var(--cream); border-radius: 22px 22px 6px 22px;
+}
+.msg.me img { width: 34px; height: auto; background: var(--cream); padding: 4px; border-radius: 6px; }
 
 /* ── 업무 분야 카드 ── */
 .cards { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
@@ -382,12 +381,9 @@ footer.site .todo { background: rgba(255, 243, 196, 0.12); outline-color: var(--
 .field b { color: var(--gold); font-size: 0.85rem; letter-spacing: 0.12em; margin-right: 6px; }
 .field span { background: var(--black); color: var(--cream); padding: 6px 14px; font-size: 0.95rem; }
 
-/* 질문 카드: 모바일·움직임 줄이기 */
+/* 말풍선: 모바일 */
 @media (max-width: 760px) {
-  .worries { padding: 84px 0 90px; }
-  .q { width: 260px; padding: 22px 20px 18px; }
-  .q .bubble { font-size: 1rem; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .marquee { overflow-x: auto; }
+  .worries { padding: 84px 0; }
+  .worries-grid { grid-template-columns: 1fr; gap: 36px; }
+  .msg { font-size: 1rem; padding: 12px 18px; }
 }

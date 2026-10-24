@@ -32,26 +32,11 @@ const header = document.querySelector('header.site');
 const hero = document.querySelector('.hero, .page-hero');
 const statement = document.getElementById('statement');
 const words = statement ? statement.querySelectorAll('.w') : [];
-const rows = document.querySelectorAll('.marquee .row');
 const stepsList = document.querySelectorAll('.steps');
 const mbar = document.querySelector('.mbar');
 const isHome = !!document.querySelector('.hero');
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-// 질문 카드가 화면 폭의 3배가 될 때까지 복제해서 빈 공간이 보이지 않게
-// (복제본은 화면 읽기·탭 이동에서 제외)
-rows.forEach(row => {
-  const items = [...row.children];
-  while (row.scrollWidth < innerWidth * 3) {
-    items.forEach(n => {
-      const c = n.cloneNode(true);
-      c.setAttribute('aria-hidden', 'true');
-      c.tabIndex = -1;
-      row.appendChild(c);
-    });
-  }
-});
 
 function update() {
   const y = scrollY, vh = innerHeight;
@@ -78,12 +63,6 @@ function update() {
     words.forEach((w, i) => w.classList.toggle('on', p > 0.25 + (i / words.length) * 0.5));
     statement.style.setProperty('--tail', clamp((p - 0.8) / 0.15));
   }
-
-  // 키워드 띠: 가운데 정렬 기준으로 스크롤 따라 좌우로 흐름
-  rows.forEach(row => {
-    const shift = (row.getBoundingClientRect().top - vh / 2) * parseFloat(row.dataset.speed);
-    row.style.transform = `translateX(${-(row.scrollWidth - innerWidth) / 2 + shift}px)`;
-  });
 
   // 단계 위쪽 선이 그려짐
   stepsList.forEach(s => {
