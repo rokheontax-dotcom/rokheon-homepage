@@ -21,8 +21,8 @@ MOBILE_TEXT = "010-4523-4263"
 BLOG = "https://blog.naver.com/rokheontax"
 EMAIL = "gnstjd3636@rokheon.com"
 ADDRESS = "인천광역시 서해구 가정로 451, 446호"
-HOURS = '<span class="todo">평일 09:00 ~ 18:00</span>'
-BIZ_NO = '<span class="todo">OOO-OO-OOOOO</span>'
+HOURS = "평일 09:00 ~ 18:00"
+BIZ_NO = "453-07-02934"
 
 # ── 업무 분야 (메뉴 순서 = 이 목록 순서) ──
 # 광고 문구 주의: 세무사법 시행령 제33조②에 따라 근거 없는 '무료·최저가', 처분 결과 예측, 환급액 수치 광고 금지
