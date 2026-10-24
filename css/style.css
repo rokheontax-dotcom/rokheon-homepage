@@ -330,6 +330,8 @@ footer.site .todo { background: rgba(255, 243, 196, 0.12); outline-color: var(--
   .dd-panel { position: static; width: auto; opacity: 1; visibility: visible; transform: none; box-shadow: none; border: 0; padding: 0; display: none; background: var(--cream-bg); }
   .dd-panel::before { display: none; }
   .dd.open .dd-panel { display: block; }
+  /* PC용 마우스오버 가운데 정렬(translate -50%)이 터치 시 적용되어 목록이 화면 왼쪽 밖으로 밀리던 문제 방지 */
+  .dd:hover .dd-panel, .dd:focus-within .dd-panel { transform: none; opacity: 1; visibility: visible; }
   .dd.open .chev { transform: rotate(225deg) translateY(-1px); }
   .dd:hover .chev { transform: rotate(45deg) translateY(-3px); }
   .dd.open:hover .chev { transform: rotate(225deg) translateY(-1px); }
