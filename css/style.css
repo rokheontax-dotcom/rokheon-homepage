@@ -130,10 +130,10 @@ header.site.scrolled { background: rgba(250, 248, 242, 0.95); backdrop-filter: b
 /* 로고의 엇갈린 두 사각형을 배경 도형으로 */
 .hero-visual { position: relative; align-self: end; height: 100%; min-height: 520px; }
 .blk { position: absolute; }
-.blk-a { right: 4%; top: 14%; width: 66%; height: 50%; background: var(--black); transform: translateY(calc(var(--hp, 0) * -160px)); }
-.blk-b { left: 2%; top: 40%; width: 58%; height: 46%; border: 1.5px solid var(--black); transform: translateY(calc(var(--hp, 0) * -70px)); }
+.blk-a { right: 8%; top: 26%; width: 58%; height: 44%; background: var(--black); transform: translateY(calc(var(--hp, 0) * -160px)); }
+.blk-b { left: 8%; top: 48%; width: 52%; height: 40%; border: 1.5px solid var(--black); transform: translateY(calc(var(--hp, 0) * -70px)); }
 .blk-a::after { content: "ROK HEON"; position: absolute; left: 22px; bottom: 16px; color: var(--cream); font-size: 0.75rem; letter-spacing: 0.14em; }
-.person { position: absolute; bottom: 0; left: 50%; width: min(92%, 500px); transform: translate(-50%, calc(var(--hp, 0) * 50px)); }
+.person { position: absolute; bottom: 0; left: 50%; width: min(74%, 390px); transform: translate(-50%, calc(var(--hp, 0) * 50px)); }
 .person img { width: 100%; opacity: 0; animation: fade 1.4s 0.3s var(--ease) forwards; }
 .hero-visual .blk { opacity: 0; animation: fade 1.2s var(--ease) forwards; }
 .hero-visual .blk-b { animation-delay: 0.2s; }
@@ -176,11 +176,11 @@ section.sec { padding: 120px 0; }
 .bg-cream { background: var(--cream-bg); }
 
 /* ── 대표 소개 ── */
-.about { display: grid; grid-template-columns: 420px 1fr; gap: 72px; align-items: center; }
+.about { display: grid; grid-template-columns: 360px 1fr; gap: 72px; align-items: center; }
 .about-visual { position: relative; aspect-ratio: 4 / 5; }
 .about-visual .frame { position: absolute; inset: 12% 0 0 8%; background: var(--cream); }
 .about-visual .frame-line { position: absolute; inset: 0 10% 18% 0; border: 1.5px solid var(--black); }
-.about-visual img { position: absolute; bottom: 0; left: 50%; width: 88%; transform: translateX(-50%); }
+.about-visual img { position: absolute; bottom: 0; left: 50%; width: 80%; transform: translateX(-50%); }
 .js .about-visual img { clip-path: inset(100% 0 0 0); transition: clip-path 1.3s var(--ease); }
 .js .about-visual.in img { clip-path: inset(0 0 0 0); }
 .js .about-visual .frame { transform: scaleY(0); transform-origin: bottom; transition: transform 1s var(--ease); }
@@ -327,13 +327,13 @@ footer.site .todo { background: rgba(255, 243, 196, 0.12); outline-color: var(--
   .hero .wrap { grid-template-columns: 1fr; gap: 0; }
   .hero-text { padding: 40px 0 8px; }
   .hero-visual { min-height: 0; height: auto; margin-top: 36px; }
-  .person { position: relative; left: 0; margin: 0 auto; width: min(80%, 340px); transform: translateY(calc(var(--hp, 0) * 30px)); }
+  .person { position: relative; left: 0; margin: 0 auto; width: min(64%, 260px); transform: translateY(calc(var(--hp, 0) * 30px)); }
   .blk-a { top: 10%; height: 56%; }
   .blk-b { top: 34%; height: 50%; }
   .scroll-hint { display: none; }
   .statement { height: 240vh; }
   .about { grid-template-columns: 1fr; }
-  .about-visual { max-width: 340px; width: 100%; margin: 0 auto; }
+  .about-visual { max-width: 290px; width: 100%; margin: 0 auto; }
   .meaning .hanja div { width: 120px; }
   .meaning .hanja b { font-size: 2.8rem; }
   .cards { grid-template-columns: 1fr; }
