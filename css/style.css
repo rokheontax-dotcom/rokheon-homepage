@@ -401,6 +401,12 @@ footer.site .todo { background: rgba(255, 243, 196, 0.12); outline-color: var(--
 .part li::before { content: ""; position: absolute; left: 2px; top: 1.15em; width: 9px; height: 5px; border-left: 2px solid var(--gold); border-bottom: 2px solid var(--gold); transform: rotate(-45deg); }
 .part-note { margin-top: auto; padding-top: 18px; font-size: 0.85rem; color: var(--muted); }
 .part-note::before { content: "※ "; color: var(--gold); }
+.price { margin-top: auto; padding: 16px 0 0; }
+.price div { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; padding: 12px 16px; background: var(--white); border: 1px solid var(--line); }
+.price div + div { border-top: 0; }
+.price dt { font-size: 0.88rem; color: var(--muted); }
+.price dd { font-weight: 700; color: var(--black); white-space: nowrap; }
+.price + .part-note { margin-top: 0; padding-top: 12px; }
 
 .tabs { display: inline-flex; gap: 0; margin-bottom: 28px; border: 1px solid var(--black); }
 .tabs button { font: inherit; font-size: 0.95rem; padding: 10px 22px; background: transparent; border: 0; cursor: pointer; color: var(--ink); transition: 0.2s; }

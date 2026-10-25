@@ -41,16 +41,20 @@ SERVICES = [
         "parts": [
             {"name": "신고 대리", "tag": "필요한 신고만",
              "who": "장부는 직접 정리하시거나, 1년에 몇 번 있는 신고만 맡기고 싶은 개인사업자",
-             "items": ["부가가치세 신고 (일반·간이과세자)", "사업장현황신고 (면세사업자)", "종합소득세 신고 대리"]},
+             "items": ["부가가치세 신고 (일반·간이과세자)", "사업장현황신고 (면세사업자)", "종합소득세 신고 대리"],
+             "price": [("부가가치세·사업장현황신고", "건당 10만원부터"), ("종합소득세 신고", "20만원부터")]},
             {"name": "개인사업자 기장", "tag": "매달 장부까지",
              "who": "매달 장부와 신고를 모두 맡기고 사업에만 집중하고 싶은 개인사업자",
              "items": ["매달 장부 작성 (복식부기)", "부가가치세·원천세 신고", "종합소득세 신고 (성실신고확인 포함)", "신고 전 예상 세액 안내"],
+             "price": [("기장료", "월 8만원부터")],
              "note": "종합소득세 신고 수수료(조정료)는 기장료와 별도입니다."},
             {"name": "법인사업자 기장", "tag": "결산·법인세까지",
              "who": "장부 작성부터 결산, 법인세 신고까지 맡겨야 하는 법인",
              "items": ["장부 작성과 결산", "법인세·부가가치세·원천세 신고", "대표자 급여·가지급금 점검", "중간예납 등 일정 안내"],
+             "price": [("기장료", "월 15만원부터")],
              "note": "법인세 신고 수수료(조정료)는 기장료와 별도입니다."},
         ],
+        "parts_note": "수수료는 모두 부가가치세 별도이며, 업종·매출 규모·거래 건수에 따라 달라집니다.",
         "for": [
             "매달 돌아오는 세금 신고 일정을 챙기기 버거운 사장님",
             "장부는 직접 정리하고 신고만 맡기고 싶은 분",
@@ -161,8 +165,9 @@ SERVICES = [
              "카드·현금영수증·세금계산서처럼 홈택스에서 조회되는 자료는 저희가 직접 확인합니다. "
              "조회되지 않는 계약서나 간이영수증 등은 담당자가 사진이나 메일로 직접 받습니다."),
             ("기장료와 신고 수수료는 어떻게 정해지나요?",
-             "업종, 매출 규모, 직원 수, 거래 건수에 따라 달라집니다. 현재 상황을 확인한 뒤 안내드립니다. "
-             "기장을 맡기셔도 종합소득세·법인세 신고 수수료(조정료)는 별도입니다."),
+             "위에 적은 금액부터 시작하고, 업종, 매출 규모, 직원 수, 거래 건수에 따라 달라집니다. "
+             "현재 상황을 확인한 뒤 정확한 금액을 안내드립니다. "
+             "기장을 맡기셔도 종합소득세·법인세 신고 수수료(조정료)는 별도이며, 모든 수수료는 부가가치세 별도입니다."),
         ],
     },
     {
@@ -440,15 +445,18 @@ def parts_section(s):
     for i, p in enumerate(s["parts"]):
         items = "".join(f"<li>{escape(t)}</li>" for t in p["items"])
         note = f'<p class="part-note">{escape(p["note"])}</p>' if p.get("note") else ""
+        price = ("<dl class=\"price\">" + "".join(f"<div><dt>{escape(k)}</dt><dd>{escape(v)}</dd></div>" for k, v in p["price"])
+                 + "</dl>") if p.get("price") else ""
         cards.append(f'        <div class="part" data-reveal style="--d:{i * 0.1:.2f}s"><span class="tag">{escape(p["tag"])}</span>'
-                     f'<h3>{escape(p["name"])}</h3><p class="who">{escape(p["who"])}</p><ul>{items}</ul>{note}</div>')
+                     f'<h3>{escape(p["name"])}</h3><p class="who">{escape(p["who"])}</p><ul>{items}</ul>{price}{note}</div>')
     cards = "\n".join(cards)
+    note = f'\n      <p class="cal-note" data-reveal>{escape(s["parts_note"])}</p>' if s.get("parts_note") else ""
     return f"""  <section class="sec bg-white">
     <div class="wrap">
       <div class="sec-head" data-reveal><small>HOW TO START</small><h2>상황에 맞게 맡기세요</h2></div>
       <div class="parts">
 {cards}
-      </div>
+      </div>{note}
     </div>
   </section>
 """
