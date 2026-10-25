@@ -86,3 +86,17 @@ addEventListener('scroll', () => {
 }, { passive: true });
 addEventListener('resize', update);
 update();
+
+// 탭 (업무 페이지의 개인/법인 구분). JS가 없으면 모든 탭 내용이 그대로 보인다.
+document.querySelectorAll('.tabs').forEach(tabs => {
+  const btns = tabs.querySelectorAll('button');
+  btns.forEach(btn => btn.addEventListener('click', () => {
+    btns.forEach(b => {
+      const on = b === btn;
+      b.setAttribute('aria-selected', on);
+      const panel = document.getElementById(b.dataset.tab);
+      panel.classList.toggle('on', on);
+      if (on) panel.querySelectorAll('[data-reveal]').forEach(show);
+    });
+  }));
+});

@@ -389,3 +389,57 @@ footer.site .todo { background: rgba(255, 243, 196, 0.12); outline-color: var(--
   .worries-grid { grid-template-columns: 1fr; gap: 36px; }
   .msg { font-size: 1rem; padding: 12px 18px; }
 }
+
+/* ── 업무 페이지 추가 섹션: 맡기는 방식·규정·세금 일정·FAQ ── */
+.parts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.part { display: flex; flex-direction: column; padding: 34px 30px; background: var(--bg); border: 1px solid var(--line); border-top: 3px solid var(--gold); }
+.part .tag { align-self: flex-start; font-size: 0.78rem; color: var(--gold); border: 1px solid var(--gold); padding: 2px 10px; letter-spacing: 0.04em; }
+.part h3 { font-size: 1.35rem; color: var(--black); margin: 14px 0 8px; letter-spacing: -0.02em; }
+.part .who { color: var(--muted); font-size: 0.93rem; min-height: 3.2em; }
+.part ul { list-style: none; margin-top: 18px; border-top: 1px solid var(--line); }
+.part li { padding: 11px 0 11px 22px; border-bottom: 1px solid var(--line); position: relative; font-size: 0.97rem; }
+.part li::before { content: ""; position: absolute; left: 2px; top: 1.15em; width: 9px; height: 5px; border-left: 2px solid var(--gold); border-bottom: 2px solid var(--gold); transform: rotate(-45deg); }
+.part-note { margin-top: auto; padding-top: 18px; font-size: 0.85rem; color: var(--muted); }
+.part-note::before { content: "※ "; color: var(--gold); }
+
+.tabs { display: inline-flex; gap: 0; margin-bottom: 28px; border: 1px solid var(--black); }
+.tabs button { font: inherit; font-size: 0.95rem; padding: 10px 22px; background: transparent; border: 0; cursor: pointer; color: var(--ink); transition: 0.2s; }
+.tabs button + button { border-left: 1px solid var(--black); }
+.tabs button[aria-selected="true"] { background: var(--black); color: var(--cream); }
+.js .tab-panel:not(.on) { display: none; }
+
+.rules { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.rule { padding: 30px 30px 26px; background: var(--bg); border: 1px solid var(--line); }
+.rule h4 { font-size: 1.12rem; color: var(--black); margin-bottom: 10px; letter-spacing: -0.02em; }
+.rule p { color: var(--muted); font-size: 0.95rem; }
+.rule small { display: block; margin-top: 14px; font-size: 0.8rem; color: var(--gold); }
+
+.cal { border-top: 1px solid var(--black); }
+.cal-row { display: grid; grid-template-columns: 130px 1fr 260px; gap: 24px; align-items: baseline; padding: 18px 4px; border-bottom: 1px solid var(--line); }
+.cal-row b { color: var(--gold); font-size: 1.05rem; }
+.cal-row strong { color: var(--black); font-weight: 700; }
+.cal-row span { display: block; color: var(--muted); font-size: 0.9rem; }
+.cal-row small { color: var(--muted); font-size: 0.82rem; text-align: right; }
+.cal-note { margin-top: 18px; font-size: 0.88rem; color: var(--muted); }
+
+.faq { border-top: 1px solid var(--line); }
+.qa { border-bottom: 1px solid var(--line); }
+.qa summary { list-style: none; cursor: pointer; padding: 20px 36px 20px 0; position: relative; font-weight: 500; font-size: 1.02rem; }
+.qa summary::-webkit-details-marker { display: none; }
+.qa summary::after { content: "+"; position: absolute; right: 4px; top: 50%; transform: translateY(-50%); color: var(--gold); font-size: 1.4rem; font-weight: 400; transition: transform 0.25s; }
+.qa[open] summary::after { transform: translateY(-50%) rotate(45deg); }
+.qa p { color: var(--muted); padding: 0 8px 22px 0; font-size: 0.96rem; }
+
+@media (max-width: 960px) {
+  .parts { grid-template-columns: 1fr; }
+  .part .who { min-height: 0; }
+  .cal-row { grid-template-columns: 110px 1fr; }
+  .cal-row small { grid-column: 2; text-align: left; margin-top: -14px; }
+}
+@media (max-width: 760px) {
+  .rules { grid-template-columns: 1fr; }
+  .tabs { display: flex; }
+  .tabs button { flex: 1; padding: 10px 8px; font-size: 0.9rem; }
+  .cal-row { grid-template-columns: 1fr; gap: 2px; padding: 16px 2px; }
+  .cal-row small { grid-column: auto; margin-top: 4px; }
+}
