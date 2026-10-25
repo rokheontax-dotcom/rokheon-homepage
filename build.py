@@ -24,7 +24,7 @@ TEL = "tel:0325454263"
 TEL_TEXT = "032-545-4263"
 MOBILE = "tel:01045234263"
 MOBILE_TEXT = "010-4523-4263"
-BLOG = "https://blog.naver.com/rokheontax"
+BLOG = "https://blog.naver.com/PostList.naver?blogId=rokheontax&amp;from=postList&amp;categoryNo=3"  # 블로그 세무칼럼 카테고리 (HTML 속성이라 &는 &amp;)
 EMAIL = "gnstjd3636@rokheon.com"
 ADDRESS = "인천광역시 서해구 가정로 451, 446호"
 HOURS = "평일 09:00 ~ 18:00"
