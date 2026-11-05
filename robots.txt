@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /build.py
+Disallow: /%EA%B3%B5%EC%9C%A0%EC%9D%B4%EB%AF%B8%EC%A7%80_%EB%A7%8C%EB%93%A4%EA%B8%B0.py
+
+Sitemap: http://rokheon.com/sitemap.xml

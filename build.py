@@ -9,9 +9,19 @@
 """
 from pathlib import Path
 from html import escape
+from urllib.parse import quote
 import hashlib
+import json
 
 ROOT = Path(__file__).parent
+
+# ── 검색·공유 설정 ──
+SITE_URL = "http://rokheon.com"  # HTTPS 인증서가 발급되면 https로 바꾸고 다시 빌드
+OG_IMAGE = "이미지/공유이미지.jpg"  # 공유이미지_만들기.py로 생성
+OG_IMAGE_ALT = "록헌 세무회계 대표 세무사 이훈성"
+# 네이버 서치어드바이저·구글 서치 콘솔의 'HTML 태그' 소유 확인 값 (받으면 content 값만 넣고 다시 빌드)
+NAVER_VERIFY = ""
+GOOGLE_VERIFY = ""
 
 
 def ver(rel):
@@ -463,8 +473,61 @@ def footer(r):
 </div>"""
 
 
-def page(r, current, title, desc, body):
-    full_title = "록헌 세무회계" if title is None else f"{title} | 록헌 세무회계"
+def abs_url(path):
+    """사이트 안 경로 → 전체 주소. 한글 경로는 퍼센트 인코딩한다."""
+    return f"{SITE_URL}/{quote(path)}"
+
+
+def org_jsonld():
+    """검색엔진용 사무소 정보 (schema.org). 메인 페이지에만 넣는다."""
+    data = {
+        "@context": "https://schema.org",
+        "@type": "AccountingService",
+        "name": "록헌 세무회계",
+        "url": abs_url(""),
+        "image": abs_url(OG_IMAGE),
+        "logo": abs_url("이미지/로고_골드.png"),
+        "telephone": "+82-" + TEL_TEXT[1:],
+        "email": EMAIL,
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "KR",
+            "addressRegion": "인천광역시",
+            "addressLocality": "서해구",
+            "streetAddress": "가정로 451, 446호",
+        },
+        "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "09:00",
+            "closes": "18:00",
+        },
+        "founder": {"@type": "Person", "name": "이훈성", "jobTitle": "대표 세무사"},
+        "sameAs": [
+            "https://blog.naver.com/rokheontax",
+            "https://www.youtube.com/channel/UC6APMK1LwbIcdYDDVssYpdw",
+            "https://www.instagram.com/rokheontax",
+            "https://pf.kakao.com/_EGkQG",
+        ],
+    }
+    return ('<script type="application/ld+json">'
+            + json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "</script>\n")
+
+
+def verify_meta():
+    out = ""
+    if NAVER_VERIFY:
+        out += f'<meta name="naver-site-verification" content="{escape(NAVER_VERIFY)}">\n'
+    if GOOGLE_VERIFY:
+        out += f'<meta name="google-site-verification" content="{escape(GOOGLE_VERIFY)}">\n'
+    return out
+
+
+def page(r, current, title, desc, body, path):
+    """path: 사이트 안 경로 (메인은 빈 문자열). 대표 주소와 공유 정보에 쓴다."""
+    brand = "인천 서해구 세무사 록헌 세무회계"
+    full_title = "록헌 세무회계 | 인천 서해구 세무사 이훈성" if title is None else f"{title} | {brand}"
+    url = abs_url(path)
     return f"""<!doctype html>
 <html lang="ko">
 <head>
@@ -472,9 +535,19 @@ def page(r, current, title, desc, body):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{full_title}</title>
 <meta name="description" content="{escape(desc)}">
+{verify_meta()}<link rel="canonical" href="{url}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="록헌 세무회계">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:url" content="{url}">
 <meta property="og:title" content="{full_title}">
 <meta property="og:description" content="{escape(desc)}">
-<link rel="icon" href="{r}이미지/심볼.png">
+<meta property="og:image" content="{abs_url(OG_IMAGE)}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{OG_IMAGE_ALT}">
+<meta name="twitter:card" content="summary_large_image">
+{org_jsonld() if current == "home" else ""}<link rel="icon" href="{r}이미지/심볼.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -676,17 +749,30 @@ def main():
     src = ROOT / "_원본"
     home = fill((src / "홈.html").read_text(encoding="utf-8"), "").replace("{SERVICE_CARDS}", service_cards("")).replace("{WORRY_CHAT}", worry_chat(""))
     (ROOT / "index.html").write_text(page("", "home", None,
-        "법대 출신 세무사가 처음부터 끝까지 직접 상담합니다. 법령과 예규를 근거로 답하는 록헌 세무회계.", home), encoding="utf-8")
+        "인천 서해구 록헌 세무회계. 법대 출신 세무사가 처음부터 끝까지 직접 상담합니다. 법령과 예규를 근거로 답합니다.", home, ""), encoding="utf-8")
 
     about = fill((src / "회사소개.html").read_text(encoding="utf-8"), "")
     (ROOT / "about.html").write_text(page("", "about", "회사소개",
-        "록헌 세무회계 대표 세무사 이훈성 소개, 일하는 방식, 오시는 길.", about), encoding="utf-8")
+        "록헌 세무회계 대표 세무사 이훈성 소개, 일하는 방식, 오시는 길.", about, "about.html"), encoding="utf-8")
 
     (ROOT / "services").mkdir(exist_ok=True)
     for s in SERVICES:
-        (ROOT / "services" / f'{s["slug"]}.html').write_text(
-            page("../", s["slug"], s["name"], f'{s["name"]} — {s["lead"]} 록헌 세무회계.', service_body(s)), encoding="utf-8")
-    print("생성 완료:", 2 + len(SERVICES), "페이지")
+        path = f'services/{s["slug"]}.html'
+        (ROOT / path).write_text(
+            page("../", s["slug"], s["name"], f'{s["name"]} — {s["lead"]} 록헌 세무회계.', service_body(s), path), encoding="utf-8")
+
+    paths = ["", "about.html"] + [f'services/{s["slug"]}.html' for s in SERVICES]
+    urls = "\n".join(f"  <url><loc>{abs_url(p)}</loc></url>" for p in paths)
+    (ROOT / "sitemap.xml").write_text(
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        f'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}\n</urlset>\n', encoding="utf-8")
+    # 생성 스크립트는 공개돼 있어도 검색에 잡힐 필요가 없다. 로봇 규칙은 한글을 퍼센트 인코딩해 적는다.
+    (ROOT / "robots.txt").write_text(
+        "User-agent: *\n"
+        "Disallow: /build.py\n"
+        f"Disallow: /{quote('공유이미지_만들기.py')}\n"
+        f"\nSitemap: {abs_url('sitemap.xml')}\n", encoding="utf-8")
+    print("생성 완료:", len(paths), "페이지 + sitemap.xml, robots.txt")
 
 
 if __name__ == "__main__":
